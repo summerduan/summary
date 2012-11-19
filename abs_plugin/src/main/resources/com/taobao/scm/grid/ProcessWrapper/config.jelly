@@ -1,0 +1,42 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+	xmlns:p="/lib/hudson/project">
+<tr>
+	<td colspan="3" style="width: 100%;">
+	<table style="width: 100%;">
+	<tbody>
+	<j:forEach var="processType" items="${from.getProcessTypes()}">
+		<f:radioBlock name="processType" value="${processType.code}" title="${processType.name}" checked="${instance.processType == processType.code}">
+			<j:forEach var="processStep" items="${from.getProcessSteps(processType.code)}">
+				<f:section title="${processStep.name}">
+					<f:block>
+						<div style="padding-left: 2em">
+							<label class="attach-previous">构建参数</label>
+							<f:hetero-list name="${processStep.code}Parameters" hasHeader="true"
+								descriptors="${h.getParameterDescriptors()}" items="${instance.processStep[processStep.code].parameterDefinitions}"
+								addCaption="添加构建参数" />
+							<br />
+							<!-- Pre build steps -->
+							<label class="attach-previous">构建前动作</label>
+							<f:hetero-list name="${processStep.code}PreBuildSteps" hasHeader="true"
+								descriptors="${h.getBuilderDescriptors(it)}"
+								items="${instance.processStep[processStep.code].preBuildSteps}"
+								addCaption="添加构建前动作"/>
+							<br />
+							<!-- Post build steps -->
+							<label class="attach-previous">构建后动作</label>
+							<f:hetero-list name="${processStep.code}PostBuildSteps" hasHeader="true"
+								descriptors="${h.getBuilderDescriptors(it)}"
+								items="${instance.processStep[processStep.code].postBuildSteps}"
+								addCaption="添加构建后动作"/>
+						</div>
+					</f:block>
+				</f:section>
+			</j:forEach>
+		</f:radioBlock>
+	</j:forEach>
+	</tbody>
+	</table>
+	</td>
+</tr>
+</j:jelly>

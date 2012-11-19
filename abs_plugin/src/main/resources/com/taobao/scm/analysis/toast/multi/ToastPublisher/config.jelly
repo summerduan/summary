@@ -1,0 +1,19 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+	<st:include it="${instance.processScope}" from="${from.getProcessScope()}" page="config.jelly" />
+	<f:entry title="Toast Project ID">
+		<f:textbox name="projectId" value="${instance.projectId}" />
+	</f:entry>	
+	<f:entry title="Toast Test Type">
+        <select name="type" class="setting-input">
+          <j:forEach var="s" items="${from.toastTypes}">
+			<f:option selected="${s.code == instance.type}" value="${s.code}">
+              	${s.name}
+			</f:option>
+          </j:forEach>
+        </select>
+	</f:entry>
+	<f:entry title="Svn Url for Unit Test">
+		<f:textbox name="build" value="${instance.detail}" />
+	</f:entry>	
+</j:jelly>

@@ -1,0 +1,41 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+	<t:summary icon="/plugin/abs-hudson/images/toast-48x48.png">
+		<TABLE width="100%">
+			<TR>
+				<TH colspan="2">测试结果概要</TH>
+			</TR>
+		<j:if test="${!it.toastResult.invoke}">
+			<TR>
+				<TD align="left" colspan="2">已提交测试，正在处理过程中，请稍等...</TD>
+			</TR>
+		</j:if>
+		<j:if test="${it.toastResult.invoke}">
+			<j:if test="${it.toastResult.success}">
+				<TR>
+					<TD width="80">运行用例数:</TD>
+					<TD>${it.toastResult.retnData.case_total_amount}</TD>
+				</TR>
+				<TR>
+					<TD>完成用例数:</TD>
+					<TD>${it.toastResult.retnData.case_complete_amount}</TD>
+				</TR>
+				<TR>
+					<TD>成功用例数:</TD>
+					<TD>${it.toastResult.getCasePassListSize()}</TD>
+				</TR>
+				<TR>
+					<TD>失败用例数:</TD>
+					<TD>${it.toastResult.getCaseFailListSize()}</TD>
+				</TR>
+			</j:if>
+			<j:if test="${!it.toastResult.success}">
+				<TR>
+					<TD align="left" colspan="2">${it.toastResult.retnData.desc_info}</TD>
+				</TR>
+			</j:if>
+		</j:if>
+		</TABLE>
+	</t:summary>
+</j:jelly>

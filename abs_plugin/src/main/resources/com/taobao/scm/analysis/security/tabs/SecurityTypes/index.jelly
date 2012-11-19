@@ -1,0 +1,33 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <st:header name="Content-Type" value="text/html;charset=UTF-8" />
+  <table class="pane sortable" id="warnings">
+    <tr>
+      <td class="pane-header" width="80%">风险类型</td>
+      <td class="pane-header" width="20%">风险数</td>
+    </tr>
+    <tbody>
+      <j:forEach var="typename" items="${it.getKeySet()}">
+      	<j:set var="detail" value="${it.data.bugtypestatistics[typename]}" />
+      	<j:if test="${detail.bugnum > 0}">
+	        <tr>
+	          <td class="pane">
+	            ${typename}
+	          </td>
+	          <td class="pane">
+	            ${detail.bugnum}
+	          </td>
+	        </tr>
+			<j:forEach var="filename" items="${detail['files']}">
+	        <tr>
+	          <td class="pane" colspan="2" style="padding: 3px 50px;">
+	            <a href="./source:${filename}/?">${filename}</a>
+	          </td>
+	        </tr>
+			</j:forEach>
+      	</j:if>
+      </j:forEach>
+    </tbody>
+  </table>
+</j:jelly>

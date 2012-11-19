@@ -1,0 +1,29 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <st:header name="Content-Type" value="text/html;charset=UTF-8" />
+  <table class="pane sortable" id="warnings">
+    <tr>
+      <td class="pane-header" width="20%">用例名</td>
+      <td class="pane-header" width="20%">运行结果</td>
+      <td class="pane-header" width="60%">返回信息</td>
+    </tr>
+    <tbody>
+      <j:forEach var="caseId" items="${it.getCasePassList().keySet()}">
+      	<j:set var="detail" value="${it.casePassList[caseId]}" />
+      	<j:set var="result" value="${detail.result}" />
+        <tr>
+          <td class="pane">
+            <a href="http://bugfree.corp.taobao.com/Case.php?CaseID=${caseId}" target="_blank">${detail.name}</a>
+          </td>
+          <td class="pane">
+            ${it.getTestType(result)}
+          </td>
+          <td class="pane" style="white-space: normal;">
+            ${detail.result_info}
+          </td>
+        </tr>
+      </j:forEach>
+    </tbody>
+  </table>
+</j:jelly>

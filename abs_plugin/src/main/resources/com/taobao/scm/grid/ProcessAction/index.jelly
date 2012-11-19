@@ -1,0 +1,31 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<l:layout>
+		<st:include it="${it.project}" page="sidepanel.jelly" /> 
+		<l:main-panel>
+			<j:set var="processSteps" value="${it.getProcessSteps()}"/>
+			<j:if test="${processSteps == null}">
+				<font style="font-size: 13px; color: red;">请正确配置构建参数！</font>
+			</j:if>
+			<j:if test="${processSteps != null}">
+				<f:form method="post" action="submit">
+					<f:section title="构建参数">
+						<input type="hidden" name="type" value="${it.processWrapper.processType}" />
+						<j:forEach var="processStep" items="${processSteps}">
+							<f:radioBlock name="phase" value="${processStep.code}" title="${processStep.name}">
+								<j:forEach var="parameterDefinition" items="${it.processWrapper.processStep[processStep.code].ParameterDefinitions}">
+									<st:include it="${parameterDefinition}"
+										page="${parameterDefinition.descriptor.valuePage}" />
+								</j:forEach>
+							</f:radioBlock>
+						</j:forEach>
+						<tr>
+							<td colspan="3">
+								<f:submit value="开始构建"/>
+							</td>
+						</tr>
+					</f:section>
+				</f:form>
+			</j:if>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

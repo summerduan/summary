@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	<bean id="checkHandler" class="com.taobao.scm.analysis.security.impl.CheckHandlerImpl">
+		<property name="addrString" value="${URL}" />
+	</bean>
+	<bean id="updateHandler" class="com.taobao.scm.analysis.security.impl.UpdateHandlerImpl">
+		<property name="addrString" value="${URL}" />
+	</bean>
+	<bean id="bugtypeHandler"
+		class="com.taobao.scm.analysis.security.impl.BugtypeHandlerImpl">
+		<property name="addrString" value="${URL}" />
+	</bean>
+	<bean id="toastHandler" class="com.taobao.scm.analysis.toast.impl.ToastHandlerImpl">
+		<property name="addrString"
+			value="${URL}" />
+	</bean>
+</beans>

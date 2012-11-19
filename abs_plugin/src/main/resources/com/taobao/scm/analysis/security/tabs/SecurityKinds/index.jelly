@@ -1,0 +1,23 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <st:header name="Content-Type" value="text/html;charset=UTF-8" />
+  <table class="pane sortable" id="warnings">
+    <tr>
+      <td class="pane-header" width="20%">风险类型</td>
+      <td class="pane-header" width="80%">风险描述</td>
+    </tr>
+    <tbody>
+      <j:forEach var="kindname" items="${it.getSecurityKinds().keySet()}">
+        <tr>
+          <td class="pane">
+            ${kindname}
+          </td>
+          <td class="pane" style="white-space: normal;">
+            ${it.securityKinds[kindname]}
+          </td>
+        </tr>
+      </j:forEach>
+    </tbody>
+  </table>
+</j:jelly>

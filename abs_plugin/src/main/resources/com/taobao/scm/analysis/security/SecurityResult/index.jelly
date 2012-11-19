@@ -1,0 +1,40 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+	<l:layout norefresh="true">
+		<st:include it="${it.owner}" page="sidepanel.jelly" />
+		<l:main-panel>
+			<h2>安全检测概要</h2>
+			<TABLE width="100%">
+			<j:if test="${it.success}">
+				<TR>
+					<TD align="right" width="100">检测文件数:</TD>
+					<TD>${it.data.summary.filenum}</TD>
+				</TR>
+				<TR>
+					<TD align="right">包含风险数:</TD>
+					<TD>${it.data.summary.bugnum}</TD>
+				</TR>
+				<TR>
+					<TD align="right">SVN地址:</TD>
+					<TD><A href="${it.data.summary.svn}" target="_blank">${it.data.summary.svn}</A></TD>
+				</TR>
+				<TR>
+					<TD align="right">检测类型:</TD>
+					<TD>${it.data.summary.type}</TD>
+				</TR>
+			</j:if>
+			<j:if test="${!it.success}">
+				<TR>
+					<TD align="left" colspan="2">${it.data.msg}</TD>
+				</TR>
+			</j:if>
+				<TR>
+					<TD align="right" colspan="2">Power By: <A href="http://stc.taobao.net/stc/" target="_blank">安全测试团队</A></TD>
+				</TR>
+			</TABLE>
+			<BR/>
+			<st:include page="main.jelly" />
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

@@ -1,0 +1,74 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+	<st:header name="Content-Type" value="text/html;charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="/plugin/abs-hudson/js/yui/container/assets/skins/sam/container.css" />
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/element/element-min.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/container/container-min.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/connection/connection-min.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/yahoo/yahoo-min.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/json/json-min.js"></script>
+	<script type="text/javascript" src="/plugin/abs-hudson/js/yui/selector/selector-min.js"></script>
+
+	<l:layout norefresh="true">
+		<st:include it="${it.owner}" page="sidepanel.jelly" />
+		<st:include it="${it}" page="anchor.jelly" />
+	    <l:main-panel>
+	      	<h1>文件名: ${it.filename}</h1>
+			<DIV id="container" class="yui-skin-sam" />
+			<FORM id="form" />
+			<SCRIPT LANGUAGE="JavaScript">
+			YAHOO.namespace("errMsg");
+			function init() {
+				YAHOO.errMsg.overlay = new YAHOO.widget.SimpleDialog("overlay", {
+						// width: "300px",
+						visible: false,
+						close: true,
+						buttons: [
+							{
+								text: "误报",
+								handler: function() {
+									var id = YAHOO.errMsg.el.getAttributeNode('myId').value;
+									YAHOO.util.Connect.asyncRequest('GET', '../update:' + id + '/?', {
+										success: function(response) {
+											try {
+												var obj = YAHOO.lang.JSON.parse(response.responseText);
+												alert(obj['msg']);
+												YAHOO.util.Dom.setStyle(YAHOO.util.Selector.query('div[myId="' + id + '"]'), 'background-color', '#CCCCCC');
+											} catch(e) {
+												alert(e);
+											}
+										},
+										failure: function(response) {
+											alert('网络通讯异常，请联系管理员！');
+										}
+									});
+									this.hide();
+								}
+							}, {
+								text: "关闭",
+								handler: function() {
+									this.hide();
+								},
+								isDefault: true
+							}
+						]
+				 	} );
+				YAHOO.errMsg.show = function(el) {
+					YAHOO.errMsg.overlay.hide();
+					YAHOO.errMsg.overlay.setBody(el.getAttributeNode('tooltip').value);
+					YAHOO.errMsg.overlay.cfg.queueProperty("x", YAHOO.util.Dom.getX(el) + 50);
+					YAHOO.errMsg.overlay.cfg.queueProperty("y", YAHOO.util.Dom.getY(el));
+					YAHOO.errMsg.overlay.cfg.queueProperty("width", YAHOO.util.Dom.getViewportWidth() / 2);
+					YAHOO.errMsg.overlay.render("container");
+					YAHOO.errMsg.el = el;
+					YAHOO.errMsg.overlay.show();
+				};
+			}
+			YAHOO.util.Event.addListener(window, "load", init);
+			</SCRIPT>
+		  	${it.sourceCode}
+	    </l:main-panel>
+	</l:layout>
+</j:jelly>

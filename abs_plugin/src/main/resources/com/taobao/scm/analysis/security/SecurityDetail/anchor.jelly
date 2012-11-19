@@ -1,0 +1,14 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+	<l:side-panel>
+		<l:pane width="200" title="风险列表">
+			<j:forEach var="errItem" items="${it.errList}">
+			<TR>
+				<TD><A href="#${errItem.lineNumb}">行: ${errItem.lineNumb}</A></TD>
+				<TD>类型: ${errItem.errType}</TD>
+			</TR>
+			</j:forEach>
+		</l:pane>
+	</l:side-panel>
+</j:jelly>

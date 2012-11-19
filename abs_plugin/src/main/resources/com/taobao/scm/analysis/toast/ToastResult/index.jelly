@@ -1,0 +1,51 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+	<l:layout norefresh="true">
+		<st:include it="${it.owner}" page="sidepanel.jelly" />
+		<l:main-panel>
+			<h2>结果概要</h2>
+			<TABLE width="100%">
+			<j:if test="${!it.invoke}">
+				<TR>
+					<TD align="right" width="100">进程:</TD>
+					<TD>已提交测试，正在处理过程中，请稍等...</TD>
+				</TR>
+			</j:if>
+			<j:if test="${it.invoke}">
+				<j:if test="${it.success}">
+					<TR>
+						<TD align="right" width="100">开始时间:</TD>
+						<TD>${it.retnData.startTime}</TD>
+					</TR>
+					<TR>
+						<TD align="right">结束时间:</TD>
+						<TD>${it.retnData.endTime}</TD>
+					</TR>
+					<TR>
+						<TD align="right">运行用例数:</TD>
+						<TD>${it.retnData.case_total_amount}</TD>
+					</TR>
+					<TR>
+						<TD align="right">完成用例数:</TD>
+						<TD>${it.retnData.case_complete_amount}</TD>
+					</TR>
+					<TR>
+						<TD align="right">成功用例数:</TD>
+						<TD>${it.getCasePassListSize()}</TD>
+					</TR>
+					<TR>
+						<TD align="right">失败用例数:</TD>
+						<TD>${it.getCaseFailListSize()}</TD>
+					</TR>
+				</j:if>
+			</j:if>
+				<TR>
+					<TD align="right" colspan="2">Power By: <A href="http://toast.corp.taobao.com" target="_blank">TOAST</A></TD>
+				</TR>
+			</TABLE>
+			<BR/>
+			<st:include page="main.jelly" />
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

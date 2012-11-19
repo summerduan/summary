@@ -1,0 +1,14 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+	<f:entry title="Grid scope">
+		<select name="processScope" size="5" multiple="true" style="width: 320px;">
+			<j:forEach var="type" items="${from.getProcessTypes()}">
+		  		<optgroup label="${type.name}">
+					<j:forEach var="step" items="${from.getProcessSteps(type.code)}">
+						${from.spliceHtml(type.code, step.code, step.name, it)}
+				  	</j:forEach>
+			  	</optgroup>
+		  	</j:forEach>
+		</select>
+	</f:entry>
+</j:jelly>

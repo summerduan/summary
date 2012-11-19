@@ -1,0 +1,6 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<!-- 据上官纨所提需求，关闭编译结果图示，改为脚本实现；于2010.04.20改回 -->
+	<j:if test="${!empty(it.iconUrl)}">
+		<img width="16" height="16" src="${it.iconUrl}"/>
+	</j:if>
+</j:jelly>
